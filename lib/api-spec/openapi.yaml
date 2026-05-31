@@ -3,13 +3,19 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Car Dealership API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: cars
+    description: Car inventory operations
+  - name: auth
+    description: Admin authentication
+  - name: contact
+    description: Contact form
 paths:
   /healthz:
     get:
@@ -24,13 +30,410 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  # --- Cars ---
+  /cars:
+    get:
+      operationId: listCars
+      tags: [cars]
+      summary: List all cars
+      parameters:
+        - name: brand
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: featured
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: available
+          in: query
+          required: false
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: List of cars
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Car"
+    post:
+      operationId: createCar
+      tags: [cars]
+      summary: Create a car (admin only)
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CarInput"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Car"
+        "401":
+          description: Unauthorized
+
+  /cars/stats:
+    get:
+      operationId: getCarStats
+      tags: [cars]
+      summary: Get car inventory statistics
+      responses:
+        "200":
+          description: Inventory stats
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CarStats"
+
+  /cars/{id}:
+    get:
+      operationId: getCar
+      tags: [cars]
+      summary: Get a car by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Car details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Car"
+        "404":
+          description: Not found
+    patch:
+      operationId: updateCar
+      tags: [cars]
+      summary: Update a car (admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CarUpdate"
+      responses:
+        "200":
+          description: Updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Car"
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+    delete:
+      operationId: deleteCar
+      tags: [cars]
+      summary: Delete a car (admin only)
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Deleted
+        "401":
+          description: Unauthorized
+        "404":
+          description: Not found
+
+  # --- Auth ---
+  /auth/login:
+    post:
+      operationId: adminLogin
+      tags: [auth]
+      summary: Admin login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginCredentials"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          description: Invalid credentials
+
+  /auth/me:
+    get:
+      operationId: getAdminMe
+      tags: [auth]
+      summary: Get current admin user
+      security:
+        - bearerAuth: []
+      responses:
+        "200":
+          description: Admin user info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminUser"
+        "401":
+          description: Unauthorized
+
+  # --- Contact ---
+  /contact:
+    post:
+      operationId: sendContactMessage
+      tags: [contact]
+      summary: Send a contact message
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactMessage"
+      responses:
+        "200":
+          description: Message sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactResult"
+        "400":
+          description: Validation error
+        "500":
+          description: Failed to send email
+
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
   schemas:
     HealthStatus:
       type: object
+      required: [status]
       properties:
         status:
           type: string
-      required:
-        - status
 
+    Car:
+      type: object
+      required: [id, brand, model, year, price, available, featured, images, createdAt, updatedAt]
+      properties:
+        id:
+          type: integer
+        brand:
+          type: string
+        model:
+          type: string
+        year:
+          type: integer
+        price:
+          type: number
+        description:
+          type: ["string", "null"]
+        engine:
+          type: ["string", "null"]
+        transmission:
+          type: ["string", "null"]
+        fuelType:
+          type: ["string", "null"]
+        seats:
+          type: ["integer", "null"]
+        color:
+          type: ["string", "null"]
+        mileage:
+          type: ["integer", "null"]
+        available:
+          type: boolean
+        featured:
+          type: boolean
+        images:
+          type: array
+          items:
+            type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+
+    CarInput:
+      type: object
+      required: [brand, model, year, price]
+      properties:
+        brand:
+          type: string
+          minLength: 1
+        model:
+          type: string
+          minLength: 1
+        year:
+          type: integer
+        price:
+          type: number
+        description:
+          type: string
+        engine:
+          type: string
+        transmission:
+          type: string
+        fuelType:
+          type: string
+        seats:
+          type: integer
+        color:
+          type: string
+        mileage:
+          type: integer
+        available:
+          type: boolean
+        featured:
+          type: boolean
+        images:
+          type: array
+          items:
+            type: string
+
+    CarUpdate:
+      type: object
+      properties:
+        brand:
+          type: string
+        model:
+          type: string
+        year:
+          type: integer
+        price:
+          type: number
+        description:
+          type: string
+        engine:
+          type: string
+        transmission:
+          type: string
+        fuelType:
+          type: string
+        seats:
+          type: integer
+        color:
+          type: string
+        mileage:
+          type: integer
+        available:
+          type: boolean
+        featured:
+          type: boolean
+        images:
+          type: array
+          items:
+            type: string
+
+    CarStats:
+      type: object
+      required: [total, available, featured, byBrand]
+      properties:
+        total:
+          type: integer
+        available:
+          type: integer
+        featured:
+          type: integer
+        byBrand:
+          type: array
+          items:
+            $ref: "#/components/schemas/BrandCount"
+
+    BrandCount:
+      type: object
+      required: [brand, count]
+      properties:
+        brand:
+          type: string
+        count:
+          type: integer
+
+    LoginCredentials:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+          minLength: 1
+        password:
+          type: string
+          minLength: 1
+
+    AuthResponse:
+      type: object
+      required: [token, admin]
+      properties:
+        token:
+          type: string
+        admin:
+          $ref: "#/components/schemas/AdminUser"
+
+    AdminUser:
+      type: object
+      required: [id, username, createdAt]
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        createdAt:
+          type: string
+
+    ContactMessage:
+      type: object
+      required: [name, email, message]
+      properties:
+        name:
+          type: string
+          minLength: 1
+        email:
+          type: string
+          minLength: 1
+        phone:
+          type: string
+        subject:
+          type: string
+        message:
+          type: string
+          minLength: 1
+
+    ContactResult:
+      type: object
+      required: [success, message]
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string

@@ -1,0 +1,20 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "tCSo67TtRByHQkWs62Q7I"
+uri = "file://artifacts/car-dealership/public/images/hero-bg.png"
+type = "image"
+title = "Cinematic commercial pickup truck"
+
+[[generated]]
+id = "geppzezeyd0DBBUYw2v8y"
+uri = "file://artifacts/car-dealership/public/images/peugeot-boxer.png"
+type = "image"
+title = "White Peugeot Boxer van"
+
+[[generated]]
+id = "W3N5YWgjC_7VaGTfiVst1"
+uri = "file://artifacts/car-dealership/public/images/ford-transit.png"
+type = "image"
+title = "Black Ford Transit van"
