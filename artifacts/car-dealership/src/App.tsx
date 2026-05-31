@@ -3,6 +3,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { setAuthTokenGetter } from "@workspace/api-client-react";
+import { LanguageProvider } from "@/contexts/LanguageContext";
+import { WhatsAppButton } from "@/components/WhatsAppButton";
 
 // Layouts
 import { Navbar } from "@/components/layout/Navbar";
@@ -37,6 +39,7 @@ function PublicLayout({ children }: { children: React.ReactNode }) {
       <Navbar />
       <main className="flex-1">{children}</main>
       <Footer />
+      <WhatsAppButton />
     </div>
   );
 }
@@ -94,14 +97,16 @@ function Router() {
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Router />
-        </WouterRouter>
-        <Toaster />
-      </TooltipProvider>
-    </QueryClientProvider>
+    <LanguageProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+            <Router />
+          </WouterRouter>
+          <Toaster />
+        </TooltipProvider>
+      </QueryClientProvider>
+    </LanguageProvider>
   );
 }
 

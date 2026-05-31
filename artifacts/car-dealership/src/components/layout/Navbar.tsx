@@ -3,15 +3,17 @@ import { cn } from "@/lib/utils";
 import { Car, Menu, X, User } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function Navbar() {
   const [location] = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { t, language, setLanguage, isRTL } = useLanguage();
 
   const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/inventory", label: "Inventory" },
-    { href: "/contact", label: "Contact" },
+    { href: "/", label: t.nav.home },
+    { href: "/inventory", label: t.nav.inventory },
+    { href: "/contact", label: t.nav.contact },
   ];
 
   return (
@@ -25,8 +27,8 @@ export function Navbar() {
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center gap-8">
-          <div className="flex items-center gap-6">
+        <div className={cn("hidden md:flex items-center gap-8", isRTL && "flex-row-reverse")}>
+          <div className={cn("flex items-center gap-6", isRTL && "flex-row-reverse")}>
             {navLinks.map((link) => (
               <Link
                 key={link.href}
@@ -41,21 +43,44 @@ export function Navbar() {
             ))}
           </div>
           <div className="h-6 w-px bg-border mx-2" />
+
+          {/* Language Toggle */}
+          <button
+            data-testid="button-language-toggle"
+            onClick={() => setLanguage(language === "en" ? "ar" : "en")}
+            className="flex items-center gap-1 px-3 py-1.5 rounded-md border border-border bg-muted/40 hover:bg-muted text-sm font-semibold transition-colors"
+          >
+            {language === "en" ? (
+              <span>عربي</span>
+            ) : (
+              <span>EN</span>
+            )}
+          </button>
+
           <Link href="/admin">
             <Button variant="outline" size="sm" className="gap-2">
               <User className="h-4 w-4" />
-              Admin
+              {t.nav.admin}
             </Button>
           </Link>
         </div>
 
-        {/* Mobile Navigation Toggle */}
-        <button
-          className="md:hidden p-2 text-foreground"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
+        {/* Mobile right side */}
+        <div className="flex md:hidden items-center gap-2">
+          {/* Language Toggle Mobile */}
+          <button
+            onClick={() => setLanguage(language === "en" ? "ar" : "en")}
+            className="px-2 py-1 rounded border border-border bg-muted/40 text-xs font-bold"
+          >
+            {language === "en" ? "عربي" : "EN"}
+          </button>
+          <button
+            className="p-2 text-foreground"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Navigation Menu */}
@@ -81,7 +106,7 @@ export function Navbar() {
             <Link href="/admin" onClick={() => setIsMobileMenuOpen(false)}>
               <div className="flex items-center gap-2 text-base font-medium px-2 py-1.5 text-muted-foreground hover:text-foreground">
                 <User className="h-4 w-4" />
-                Admin Access
+                {t.nav.admin}
               </div>
             </Link>
           </div>

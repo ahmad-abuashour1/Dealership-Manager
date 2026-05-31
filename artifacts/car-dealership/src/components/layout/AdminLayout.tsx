@@ -2,7 +2,7 @@ import { Link, useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { LayoutDashboard, Car, LogOut, PackagePlus } from "lucide-react";
 import { useEffect } from "react";
-import { useGetAdminMe } from "@workspace/api-client-react";
+import { useGetAdminMe, getGetAdminMeQueryKey } from "@workspace/api-client-react";
 
 export function AdminLayout({ children }: { children: React.ReactNode }) {
   const [, setLocation] = useLocation();
@@ -14,7 +14,8 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
   const { data: admin, error, isLoading } = useGetAdminMe({
     query: {
       enabled: hasToken,
-      retry: false
+      retry: false,
+      queryKey: getGetAdminMeQueryKey(),
     }
   });
 

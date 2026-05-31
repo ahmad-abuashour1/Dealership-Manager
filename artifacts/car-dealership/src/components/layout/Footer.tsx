@@ -1,7 +1,10 @@
 import { Link } from "wouter";
 import { Car, Mail, MapPin, Phone } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-sidebar border-t border-border mt-auto">
       <div className="container mx-auto px-4 md:px-8 py-12 md:py-16">
@@ -12,40 +15,43 @@ export function Footer() {
               <span>AutoDeal</span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
-              Premium commercial vehicles for serious buyers. We provide the power, reliability, and service your business demands.
+              {t.footer.description}
             </p>
           </div>
 
           <div className="space-y-4">
-            <h3 className="font-semibold text-lg">Quick Links</h3>
+            <h3 className="font-semibold text-lg">{t.footer.quickLinks}</h3>
             <ul className="space-y-2">
               <li>
                 <Link href="/inventory" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                  View Inventory
+                  {t.footer.viewInventory}
                 </Link>
               </li>
               <li>
                 <Link href="/contact" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-                  Contact Us
+                  {t.footer.contactUs}
                 </Link>
               </li>
             </ul>
           </div>
 
           <div className="space-y-4 md:col-span-2">
-            <h3 className="font-semibold text-lg">Contact & Location</h3>
+            <h3 className="font-semibold text-lg">{t.footer.contactLocation}</h3>
             <ul className="space-y-3">
-              <li className="flex items-start gap-3 text-sm text-muted-foreground">
-                <MapPin className="h-5 w-5 text-primary shrink-0" />
-                <span>100 Industrial Parkway<br />Metro Business District<br />CA 94123</span>
-              </li>
               <li className="flex items-center gap-3 text-sm text-muted-foreground">
                 <Phone className="h-5 w-5 text-primary shrink-0" />
-                <span>+1 (800) 555-DEAL</span>
+                <a
+                  href="https://wa.me/0787929281"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-colors"
+                >
+                  0787929281
+                </a>
               </li>
               <li className="flex items-center gap-3 text-sm text-muted-foreground">
                 <Mail className="h-5 w-5 text-primary shrink-0" />
-                <span>sales@autodeal.com</span>
+                <span>aabuashour3@gmail.com</span>
               </li>
             </ul>
           </div>
@@ -53,11 +59,11 @@ export function Footer() {
 
         <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} AutoDeal Commercial Vehicles. All rights reserved.
+            © {new Date().getFullYear()} AutoDeal Commercial Vehicles. {t.footer.rights}
           </p>
           <div className="flex gap-4 text-sm text-muted-foreground">
-            <span className="cursor-pointer hover:text-primary transition-colors">Privacy Policy</span>
-            <span className="cursor-pointer hover:text-primary transition-colors">Terms of Service</span>
+            <span className="cursor-pointer hover:text-primary transition-colors">{t.footer.privacy}</span>
+            <span className="cursor-pointer hover:text-primary transition-colors">{t.footer.terms}</span>
           </div>
         </div>
       </div>
