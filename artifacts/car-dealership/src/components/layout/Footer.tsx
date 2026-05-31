@@ -41,7 +41,7 @@ export function Footer() {
               <li className="flex items-center gap-3 text-sm text-muted-foreground">
                 <Phone className="h-5 w-5 text-primary shrink-0" />
                 <a
-                  href="https://wa.me/0787929281"
+                  href="https://wa.me/962787929281"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-primary transition-colors"

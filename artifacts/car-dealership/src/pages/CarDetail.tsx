@@ -8,7 +8,7 @@ import { getCarImage } from "@/components/CarCard";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useState } from "react";
 
-const WHATSAPP_NUMBER = "0787929281";
+const WHATSAPP_NUMBER = "962787929281";
 
 export default function CarDetail() {
   const { id } = useParams();

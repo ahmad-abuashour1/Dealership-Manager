@@ -1,7 +1,7 @@
 /* Floating WhatsApp contact button — visible on all public pages */
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const WHATSAPP_NUMBER = "0787929281";
+const WHATSAPP_NUMBER = "962787929281";
 const WHATSAPP_MESSAGE = encodeURIComponent("مرحباً، أود الاستفسار عن السيارات المتاحة في معرض الساحة عمان.");
 const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
 

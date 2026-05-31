@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Phone, Mail, Clock, Send } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
-const WHATSAPP_NUMBER = "0787929281";
+const WHATSAPP_NUMBER = "962787929281";
 
 export default function Contact() {
   const { t } = useLanguage();
