@@ -56,7 +56,7 @@ export function AdminLayout({ children }: { children: React.ReactNode }) {
         <div className="h-20 flex items-center px-6 border-b border-border bg-sidebar-primary text-sidebar-primary-foreground">
           <Link href="/admin" className="flex items-center gap-2 font-bold text-xl">
             <Car className="h-6 w-6" />
-            <span>AutoDeal Admin</span>
+            <span>Al Saha Admin</span>
           </Link>
         </div>
 

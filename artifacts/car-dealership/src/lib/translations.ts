@@ -36,7 +36,7 @@ export const translations = {
     },
     // Why us
     why: {
-      title: "Why Choose AutoDeal?",
+      title: "Why Choose Al Saha?",
       subtitle: "Industry-leading service, unmatched selection, and competitive pricing.",
       quality: { title: "Verified Quality", desc: "Every vehicle passes a rigorous multi-point inspection before hitting our lot." },
       fast: { title: "Fast Delivery", desc: "Streamlined paperwork and logistics to get your fleet moving fast." },
@@ -151,7 +151,7 @@ export const translations = {
     },
     // Why us
     why: {
-      title: "لماذا تختار أوتوديل؟",
+      title: "لماذا تختار الساحة؟",
       subtitle: "خدمة رائدة في الصناعة، تشكيلة لا مثيل لها، وأسعار تنافسية.",
       quality: { title: "جودة موثقة", desc: "كل مركبة تجتاز فحصاً دقيقاً متعدد النقاط قبل عرضها." },
       fast: { title: "توصيل سريع", desc: "إجراءات مبسطة ولوجستيات سريعة لتشغيل أسطولك في أقرب وقت." },

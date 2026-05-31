@@ -2,7 +2,8 @@
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const WHATSAPP_NUMBER = "0787929281";
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
+const WHATSAPP_MESSAGE = encodeURIComponent("مرحباً، أود الاستفسار عن السيارات المتاحة في معرض الساحة عمان.");
+const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
 
 export function WhatsAppButton() {
   const { t } = useLanguage();

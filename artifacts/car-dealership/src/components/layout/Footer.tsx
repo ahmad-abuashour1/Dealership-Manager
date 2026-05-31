@@ -12,7 +12,7 @@ export function Footer() {
           <div className="space-y-4">
             <Link href="/" className="flex items-center gap-2 font-bold text-2xl tracking-tight text-primary">
               <Car className="h-8 w-8" />
-              <span>AutoDeal</span>
+              <span>Al Saha</span>
             </Link>
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
               {t.footer.description}
@@ -59,7 +59,7 @@ export function Footer() {
 
         <div className="mt-12 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-sm text-muted-foreground">
-            © {new Date().getFullYear()} AutoDeal Commercial Vehicles. {t.footer.rights}
+            © {new Date().getFullYear()} Al Saha. {t.footer.rights}
           </p>
           <div className="flex gap-4 text-sm text-muted-foreground">
             <span className="cursor-pointer hover:text-primary transition-colors">{t.footer.privacy}</span>

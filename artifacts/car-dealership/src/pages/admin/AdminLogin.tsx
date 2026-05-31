@@ -42,7 +42,7 @@ export default function AdminLogin() {
       
       toast({
         title: "Login Successful",
-        description: "Welcome to the AutoDeal Admin Panel.",
+        description: "Welcome to the Al Saha Admin Panel.",
       });
       
       setLocation("/admin");
