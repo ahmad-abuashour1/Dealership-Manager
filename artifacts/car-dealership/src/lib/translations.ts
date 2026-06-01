@@ -105,6 +105,22 @@ export const translations = {
         whatsapp: "WhatsApp",
       },
     },
+    // Buy Used Cars
+    buyUsed: {
+      badge: "New Service",
+      title: "We Buy Your Used Car",
+      subtitle: "Bring your vehicle to Al Saha showroom in Tabarbour and get the best cash offer the same day — no hassle, no delays.",
+      feature1: { title: "Free Evaluation", desc: "We assess your car with zero obligation." },
+      feature2: { title: "Instant Offer", desc: "Receive a price offer the same day." },
+      feature3: { title: "Fast Payment", desc: "Cash or instant transfer upon agreement." },
+      cta: "Chat on WhatsApp",
+    },
+    // Location
+    location: {
+      title: "Visit Us at Tabarbour Car Market",
+      subtitle: "Tabarbour Car Auction, Amman, Jordan — open Saturday to Thursday.",
+      mapsBtn: "Open in Google Maps",
+    },
     // Footer
     footer: {
       description: "Premium commercial vehicles for serious buyers. We provide the power, reliability, and service your business demands.",
@@ -219,6 +235,22 @@ export const translations = {
         hoursValue: "الأحد–الخميس: 8ص – 6م",
         whatsapp: "واتساب",
       },
+    },
+    // Buy Used Cars
+    buyUsed: {
+      badge: "خدمة جديدة",
+      title: "نشتري سيارتك المستعملة",
+      subtitle: "أحضر سيارتك إلى معرض الساحة في حراج طبربور واحصل على أفضل سعر نقداً في نفس اليوم — بدون تعقيدات.",
+      feature1: { title: "تقييم مجاني", desc: "نقيّم سيارتك بدون أي التزام منك." },
+      feature2: { title: "عرض فوري", desc: "احصل على سعر في نفس يوم الزيارة." },
+      feature3: { title: "دفع سريع", desc: "نقد أو تحويل فوري عند الاتفاق." },
+      cta: "تواصل معنا على واتساب",
+    },
+    // Location
+    location: {
+      title: "زورنا في حراج طبربور",
+      subtitle: "حراج طبربور، عمان، الأردن — مفتوح من السبت إلى الخميس.",
+      mapsBtn: "افتح في خرائط جوجل",
     },
     // Footer
     footer: {

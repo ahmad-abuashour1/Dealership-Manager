@@ -9,6 +9,9 @@ import { logger } from "./lib/logger";
 
 const app: Express = express();
 
+/* Trust the reverse proxy (Replit's shared proxy sends X-Forwarded-For) */
+app.set("trust proxy", 1);
+
 /* ── Security headers ─────────────────────────────────────────────────────── */
 app.use(
   helmet({

@@ -1,9 +1,10 @@
 import { Link } from "wouter";
-import { Car, Mail, Phone } from "lucide-react";
+import { Car, Mail, Phone, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const FACEBOOK_URL = "https://www.facebook.com/share/18Nk4Pe6bY/?mibextid=wwXIfr";
 const WHATSAPP_URL = "https://wa.me/962787929281";
+const MAPS_URL = "https://www.google.com/maps/search/حراج+طبربور+عمان+الأردن";
 
 function FacebookIcon({ className }: { className?: string }) {
   return (
@@ -90,6 +91,12 @@ export function Footer() {
               <li className="flex items-center gap-3 text-sm text-muted-foreground">
                 <Mail className="h-5 w-5 text-primary shrink-0" />
                 <span>aabuashour3@gmail.com</span>
+              </li>
+              <li className="flex items-center gap-3 text-sm text-muted-foreground">
+                <MapPin className="h-5 w-5 text-primary shrink-0" />
+                <a href={MAPS_URL} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                  حراج طبربور، عمان، الأردن
+                </a>
               </li>
               <li className="flex items-center gap-3 text-sm text-muted-foreground">
                 <FacebookIcon className="h-5 w-5 text-[#1877F2] shrink-0" />

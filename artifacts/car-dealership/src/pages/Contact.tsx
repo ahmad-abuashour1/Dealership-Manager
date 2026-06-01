@@ -9,11 +9,12 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Phone, Mail, Clock, Send } from "lucide-react";
+import { Phone, Mail, Clock, Send, MapPin } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const WHATSAPP_NUMBER = "962787929281";
 const FACEBOOK_URL = "https://www.facebook.com/share/18Nk4Pe6bY/?mibextid=wwXIfr";
+const MAPS_URL = "https://www.google.com/maps/search/حراج+طبربور+عمان+الأردن";
 
 function FacebookIcon({ className }: { className?: string }) {
   return (
@@ -127,6 +128,24 @@ export default function Contact() {
                 <div>
                   <h4 className="font-semibold text-foreground group-hover:text-[#1877F2] transition-colors">Facebook</h4>
                   <p className="text-muted-foreground mt-1 text-sm">معرض الساحة</p>
+                </div>
+              </a>
+
+              {/* Location */}
+              <a
+                href={MAPS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-4 group"
+              >
+                <div className="bg-primary/10 p-3 rounded-full text-primary shrink-0 group-hover:bg-primary/20 transition-colors">
+                  <MapPin className="h-6 w-6" />
+                </div>
+                <div>
+                  <h4 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                    {t.location.title}
+                  </h4>
+                  <p className="text-muted-foreground mt-1 text-sm">حراج طبربور، عمان، الأردن</p>
                 </div>
               </a>
 
