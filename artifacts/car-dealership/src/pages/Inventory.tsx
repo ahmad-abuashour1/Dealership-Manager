@@ -38,10 +38,17 @@ export default function Inventory() {
   return (
     <div className="w-full flex flex-col min-h-screen bg-muted/20">
       {/* Header */}
-      <div className="bg-card border-b border-border py-12 md:py-16">
+      <div className="relative bg-zinc-950 text-white py-14 md:py-20 overflow-hidden">
+        <div className="absolute inset-0 opacity-20 pointer-events-none"
+          style={{ backgroundImage: "radial-gradient(circle at 20% 50%, hsl(19 100% 50% / 0.3) 0%, transparent 60%)" }} />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
         <div className="container mx-auto px-4 md:px-8">
-          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-foreground mb-4">{t.inventory.title}</h1>
-          <p className="text-lg text-muted-foreground max-w-2xl">{t.inventory.subtitle}</p>
+          <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.2em] text-primary mb-4">
+            <span className="h-px w-8 bg-primary" />
+            {t.inventory.title}
+          </div>
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-3">{t.inventory.title}</h1>
+          <p className="text-base text-zinc-400 max-w-2xl">{t.inventory.subtitle}</p>
         </div>
       </div>
 
