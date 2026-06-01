@@ -40,28 +40,8 @@ export default function Home() {
           <div className="absolute top-20 right-0 w-64 h-64 rounded-full bg-primary/10 blur-[80px] pointer-events-none" />
         </div>
 
-        {/* Road surface at bottom */}
-        <div className="absolute bottom-0 left-0 right-0 z-[2] h-24 bg-gradient-to-t from-black/90 to-transparent pointer-events-none">
-          {/* Dashed center line */}
-          <div className="absolute bottom-6 left-0 right-0 h-[3px] overflow-hidden">
-            <div className="road-dashes flex gap-8 w-[200%]">
-              {Array.from({ length: 30 }).map((_, i) => (
-                <div key={i} className="h-full bg-white/30 rounded-full shrink-0" style={{ width: 60 }} />
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* Animated truck */}
-        <div className="hero-truck absolute bottom-6 z-[3] pointer-events-none select-none">
-          <img
-            src="/images/hero-truck.png"
-            alt=""
-            aria-hidden="true"
-            className="h-28 md:h-40 w-auto drop-shadow-2xl"
-            style={{ transform: "scaleX(-1)", filter: "drop-shadow(0 8px 24px rgba(0,0,0,0.6))" }}
-          />
-        </div>
+        {/* Bottom fade */}
+        <div className="absolute bottom-0 left-0 right-0 z-[2] h-16 bg-gradient-to-t from-black/70 to-transparent pointer-events-none" />
 
         {/* Hero content */}
         <div className="container relative z-10 mx-auto px-4 md:px-8 pb-16">
