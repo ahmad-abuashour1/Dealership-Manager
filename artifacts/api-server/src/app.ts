@@ -1,39 +1,92 @@
-import express, { type Express } from "express";
+import express, { type Express, type Request, type Response, type NextFunction } from "express";
 import cors from "cors";
 import path from "path";
 import pinoHttp from "pino-http";
+import helmet from "helmet";
+import rateLimit from "express-rate-limit";
 import router from "./routes";
 import { logger } from "./lib/logger";
 
 const app: Express = express();
 
+/* ── Security headers ─────────────────────────────────────────────────────── */
+app.use(
+  helmet({
+    crossOriginResourcePolicy: { policy: "cross-origin" }, // allow images served from /api/uploads
+    contentSecurityPolicy: false, // frontend handles its own CSP
+  })
+);
+
+/* Remove fingerprinting header */
+app.disable("x-powered-by");
+
+/* ── CORS ─────────────────────────────────────────────────────────────────── */
+app.use(
+  cors({
+    origin: process.env.ALLOWED_ORIGIN || true, // tighten in production via env var
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
+/* ── Rate limiting ────────────────────────────────────────────────────────── */
+const generalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 200,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many requests, please try again later." },
+});
+
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10, // strict: max 10 login attempts per 15 min
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many login attempts, please try again later." },
+});
+
+const contactLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000, // 1 hour
+  max: 5, // max 5 contact submissions per hour per IP
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: { error: "Too many messages sent, please try again later." },
+});
+
+/* ── Logging ──────────────────────────────────────────────────────────────── */
 app.use(
   pinoHttp({
     logger,
     serializers: {
       req(req) {
-        return {
-          id: req.id,
-          method: req.method,
-          url: req.url?.split("?")[0],
-        };
+        return { id: req.id, method: req.method, url: req.url?.split("?")[0] };
       },
       res(res) {
-        return {
-          statusCode: res.statusCode,
-        };
+        return { statusCode: res.statusCode };
       },
     },
-  }),
+  })
 );
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
-/* Serve uploaded car images statically at /api/uploads/<filename> */
+/* ── Body parsing ─────────────────────────────────────────────────────────── */
+app.use(express.json({ limit: "1mb" }));
+app.use(express.urlencoded({ extended: true, limit: "1mb" }));
+
+/* ── Static: uploaded car images ──────────────────────────────────────────── */
 const uploadsDir = path.join(process.cwd(), "..", "..", "uploads");
-app.use("/api/uploads", express.static(uploadsDir));
+app.use("/api/uploads", express.static(uploadsDir, { maxAge: "7d" }));
 
-app.use("/api", router);
+/* ── Routes with targeted rate limits ────────────────────────────────────── */
+app.use("/api/auth/login", authLimiter);
+app.use("/api/contact", contactLimiter);
+app.use("/api", generalLimiter, router);
+
+/* ── Global error handler — never leak stack traces ──────────────────────── */
+app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
+  logger.error({ err: err.message }, "Unhandled error");
+  res.status(500).json({ error: "An unexpected error occurred." });
+});
 
 export default app;
