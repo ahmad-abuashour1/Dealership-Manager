@@ -73,13 +73,8 @@ export default function AdminDashboard() {
     }
   };
 
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      maximumFractionDigits: 0,
-    }).format(price);
-  };
+  const formatPrice = (price: number) =>
+    `JD ${new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(price)}`;
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">

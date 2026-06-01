@@ -19,11 +19,7 @@ export function getCarImage(car: CarType) {
 
 export function CarCard({ car }: CarCardProps) {
   const formatPrice = (price: number) =>
-    new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      maximumFractionDigits: 0,
-    }).format(price);
+    `JD ${new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(price)}`;
 
   const imageSrc = getCarImage(car);
 
