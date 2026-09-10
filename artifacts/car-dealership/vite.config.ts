@@ -57,6 +57,22 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (
+            id.includes("/src/pages/admin/") ||
+            id.endsWith("/src/components/layout/AdminLayout.tsx")
+          ) {
+            return "admin-pages";
+          }
+
+          if (id.endsWith("/src/pages/CarDetail.tsx")) {
+            return "car-detail-page";
+          }
+        },
+      },
+    },
   },
   server: {
     port,
