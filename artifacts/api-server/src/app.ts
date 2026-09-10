@@ -4,7 +4,11 @@ import path from "path";
 import pinoHttp from "pino-http";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
-import router from "./routes";
+import healthRouter from "./routes/health";
+import authRouter from "./routes/auth";
+import carsRouter from "./routes/cars";
+import contactRouter from "./routes/contact";
+import uploadRouter from "./routes/upload";
 import { logger } from "./lib/logger";
 
 const app: Express = express();
@@ -84,7 +88,15 @@ app.use("/api/uploads", express.static(uploadsDir, { maxAge: "7d" }));
 /* ── Routes with targeted rate limits ────────────────────────────────────── */
 app.use("/api/auth/login", authLimiter);
 app.use("/api/contact", contactLimiter);
-app.use("/api", generalLimiter, router);
+app.use(
+  "/api",
+  generalLimiter,
+  healthRouter,
+  authRouter,
+  carsRouter,
+  contactRouter,
+  uploadRouter,
+);
 
 /* ── Global error handler — never leak stack traces ──────────────────────── */
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {

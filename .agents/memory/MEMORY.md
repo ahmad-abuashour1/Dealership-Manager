@@ -1,0 +1,1 @@
+- [Workspace package cleanup](package-cleanup.md) — dependency removal can touch workspace config, so verify `.replit` and the lockfile before finishing.
