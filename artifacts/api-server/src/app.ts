@@ -1,6 +1,5 @@
 import express, { type Express, type Request, type Response, type NextFunction } from "express";
 import cors from "cors";
-import path from "path";
 import pinoHttp from "pino-http";
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
@@ -80,10 +79,6 @@ app.use(
 /* ── Body parsing ─────────────────────────────────────────────────────────── */
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ extended: true, limit: "1mb" }));
-
-/* ── Static: uploaded car images ──────────────────────────────────────────── */
-const uploadsDir = path.join(process.cwd(), "..", "..", "uploads");
-app.use("/api/uploads", express.static(uploadsDir, { maxAge: "7d" }));
 
 /* ── Routes with targeted rate limits ────────────────────────────────────── */
 app.use("/api/auth/login", authLimiter);
